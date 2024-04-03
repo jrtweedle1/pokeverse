@@ -2,36 +2,40 @@ import { useState, useEffect, useContext } from "react";
 import { PokemonContext } from "./Home";
 
 function Card({ pokemon }) {
-	const [singlePokemon, setSinglePokemon] = useState(null);
-	const [description, setDescription] = useState(null);
+	const [description, setDescription] = useState('');
 	const [speciesUrl, setSpeciesUrl] = useState("");
+	const { addPokemonToSquad, removePokemonFromSquad } = useContext(PokemonContext);
+    const [detailedPokemon, setDetailedPokemon] = useState(null);
 
 	useEffect(() => {
-		if (pokemon.name !== null) {
-			fetchSinglePokemon();
-			console.log("singlePokemon", singlePokemon);
-		}
-	}, [pokemon.url]);
+        if (!pokemon.sprites && pokemon.url) {
+            fetch(pokemon.url)
+                .then(response => response.json())
+                .then(data => {
+                    setDetailedPokemon(data)
+                    setSpeciesUrl(data.species.url)
+                });
+        } else {
+            setDetailedPokemon(pokemon);
+            if (pokemon.species && pokemon.species.url) {
+                setSpeciesUrl(pokemon.species.url);
+            }
+        }
+    }, [pokemon, speciesUrl]);
+    
 
 	useEffect(() => {
 		if (speciesUrl) {
-			fetchDescription();
+			fetchDescription(speciesUrl);
 		}
 	}, [speciesUrl]);
 
-	function fetchSinglePokemon() {
-		fetch(pokemon.url)
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				setSinglePokemon(data);
-				setSpeciesUrl(data.species.url);
-			});
-	}
+    if (!detailedPokemon) {
+        return <div>Loading...</div>;
+    }
 
-	function fetchDescription() {
-		fetch(speciesUrl)
+	function fetchDescription(url) {
+		fetch(url)
 			.then((response) => {
 				return response.json();
 			})
@@ -43,11 +47,11 @@ function Card({ pokemon }) {
 	return (
 		<div className="col">
 			<div className="card" style={{ width: 18 + "rem" }}>
-				{singlePokemon && singlePokemon.sprites ? (
+				{detailedPokemon && detailedPokemon.sprites ? (
 					<img
-						src={singlePokemon.sprites.front_shiny}
+						src={detailedPokemon.sprites.front_shiny}
 						className="card-img-top"
-						alt="Loading..."
+						alt="Loading image..."
 					></img>
 				) : (
 					<p>Loading...</p>
@@ -57,15 +61,18 @@ function Card({ pokemon }) {
 						className="card-title"
 						style={{ textTransform: "uppercase" }}
 					>
-						{singlePokemon ? singlePokemon.name : "Loading..."}
+						{detailedPokemon ? detailedPokemon.name : "Loading..."}
 					</h5>
 					<p className="card-text">
 						{description
 							? description.flavor_text_entries[0].flavor_text
 							: "Loading description..."}
 					</p>
-					<a href="#" className="btn btn-primary">
-						Go somewhere
+					<a className="btn btn-success" onClick={() => addPokemonToSquad(detailedPokemon)}>
+						Add to Squad
+					</a>
+					<a className="btn btn-danger" onClick={() => removePokemonFromSquad(detailedPokemon.name)}>
+						Remove from Squad
 					</a>
 				</div>
 			</div>
