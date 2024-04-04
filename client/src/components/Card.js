@@ -9,7 +9,7 @@ function Card({ pokemon }) {
 
 	useEffect(() => {
         if (!pokemon.sprites && pokemon.url) {
-            fetch(pokemon.url)
+            fetch(pokemon)
                 .then(response => response.json())
                 .then(data => {
                     setDetailedPokemon(data)
@@ -71,7 +71,7 @@ function Card({ pokemon }) {
 					<a className="btn btn-success" onClick={() => addPokemonToSquad(detailedPokemon)}>
 						Add to Squad
 					</a>
-					<a className="btn btn-danger" onClick={() => removePokemonFromSquad(detailedPokemon.name)}>
+					<a className="btn btn-danger" onClick={() => removePokemonFromSquad(detailedPokemon)}>
 						Remove from Squad
 					</a>
 				</div>

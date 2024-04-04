@@ -7,36 +7,57 @@ function Home() {
 
 	useEffect(() => {
 		fetchAllPokemon();
-	});
+	}, []);
 
-    useEffect(() => {
-        console.log(squad); // This will log the updated state after changes.
-    }, [squad]);
+	useEffect(() => {}, [allPokemon]);
 
-	function fetchAllPokemon() {
-		fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
-			.then((response) => {
-				return response.json();
+	useEffect(() => {}, [squad]);
+
+	async function fetchAllPokemon() {
+		const initialPokemonJson = await fetch(
+			"https://pokeapi.co/api/v2/pokemon?limit=151"
+		);
+		const initialPokemonNoResults = await initialPokemonJson.json();
+		const initialPokemonResults = initialPokemonNoResults.results;
+		const pokemonUrls = initialPokemonResults.map((pkmn) => pkmn.url);
+		const pokemonDetails = await Promise.all(
+			pokemonUrls.map(async (url) => {
+				const response = await fetch(url);
+				return await response.json();
 			})
-			.then((data) => {
-				setAllPokemon(data.results);
-			});
+		);
+		setAllPokemon(pokemonDetails);
 	}
 
-	function addPokemonToSquad(singlePokemon, description) {
-		console.log("addPokemon", singlePokemon);
-		// TODO: Add logic to prevent duplicates
-		setSquad(prevSquad => {
-            console.log(prevSquad)
-            return [...prevSquad, singlePokemon];
-        })
+	// function fetchAllPokemon() {
+	// 	fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
+	// 		.then((response) => {
+	// 			return response.json();
+	// 		})
+	// 		.then((data) => {
+	// 			setAllPokemon(data.results);
+	// 		});
+	// }
+
+	function addPokemonToSquad(singlePokemon) {
+		const newAllPokemon = allPokemon.filter(function (pkmn) {
+			return pkmn.name != singlePokemon.name;
+		});
+		setAllPokemon(newAllPokemon);
+		setSquad((prevSquad) => {
+			return [...prevSquad, singlePokemon];
+		});
 	}
 
 	function removePokemonFromSquad(singlePokemon) {
-		console.log("removePokemon", singlePokemon);
-		setSquad(
-			squad.filter((squadPokemon) => squadPokemon.name !== singlePokemon)
+		setSquad((squad) =>
+			squad.filter(
+				(squadPokemon) => squadPokemon.name !== singlePokemon.name
+			)
 		);
+		console.log("singlePokemon", singlePokemon);
+		console.log("allPokemon", allPokemon);
+		setAllPokemon((currentAllPokemon) => [...allPokemon, singlePokemon]);
 	}
 
 	return (
@@ -61,14 +82,16 @@ function Home() {
 				<h2 className="text-center">Available Pokemon</h2>
 				<div className="container text-center">
 					<div class="row">
-						{allPokemon.map((singlePokemon) => {
-							return (
-								<Card
-									key={singlePokemon.name}
-									pokemon={singlePokemon}
-								></Card>
-							);
-						})}
+						{allPokemon
+							? allPokemon.map((singlePokemon) => {
+									return (
+										<Card
+											key={singlePokemon.name}
+											pokemon={singlePokemon}
+										></Card>
+									);
+							  })
+							: "Loading..."}
 					</div>
 				</div>
 			</div>
