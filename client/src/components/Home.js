@@ -4,6 +4,7 @@ import Card from "./Card";
 function Home() {
 	const [allPokemon, setAllPokemon] = useState([]);
 	const [squad, setSquad] = useState([]);
+    // const [isInSquad, setIsInSquad] = useState(false);
 
 	useEffect(() => {
 		fetchAllPokemon();
@@ -29,19 +30,9 @@ function Home() {
 		setAllPokemon(pokemonDetails);
 	}
 
-	// function fetchAllPokemon() {
-	// 	fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
-	// 		.then((response) => {
-	// 			return response.json();
-	// 		})
-	// 		.then((data) => {
-	// 			setAllPokemon(data.results);
-	// 		});
-	// }
-
 	function addPokemonToSquad(singlePokemon) {
 		const newAllPokemon = allPokemon.filter(function (pkmn) {
-			return pkmn.name != singlePokemon.name;
+			return pkmn.name !== singlePokemon.name;
 		});
 		setAllPokemon(newAllPokemon);
 		setSquad((prevSquad) => {
@@ -55,8 +46,6 @@ function Home() {
 				(squadPokemon) => squadPokemon.name !== singlePokemon.name
 			)
 		);
-		console.log("singlePokemon", singlePokemon);
-		console.log("allPokemon", allPokemon);
 		setAllPokemon((currentAllPokemon) => [...allPokemon, singlePokemon]);
 	}
 
