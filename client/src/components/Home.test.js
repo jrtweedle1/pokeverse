@@ -15,7 +15,7 @@ let container = null;
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
-// Setup server with msw to mock API calls; these are called "handlers"
+// Setup server with MSW to mock API calls; these are called "handlers"
 const server = setupServer(
     rest.get("https://pokeapi.co/api/v2/pokemon", (req, res, ctx) => {
         const limit = req.url.searchParams.get("limit");
@@ -82,15 +82,14 @@ afterEach(() => {
 	server.resetHandlers(); // Reset request handlers to prevent affecting other tests
 });
 
-// Snapshot
+// Snapshot - compares current version to previous snapshot
 test("the component renders correctly", () => {
 	const component = renderer.create(<Home />); // Creating an instance of the component
 	const tree = component.toJSON(); // Convert to JSON
 	expect(tree).toMatchSnapshot(); // Jest will create or update snapshot file
 });
 
-// TODO: Test API Call
-
+// Test API Call
 test("displays fetched Pokemon on the homepage", async () => {
 	render(<Home />);
 	await waitFor(() => {

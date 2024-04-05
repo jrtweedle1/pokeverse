@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun:wght@400..700&display=swap');
+
+h1 {
+   margin: 20px !important;
+}
+
+.nav-link {
+    color: white !important;
+    font-family: "Reem Kufi Fun", sans-serif;
+    font-size: 2rem;
+    margin-left: 20px;
+}
+
+#pokeverse-logo {
+    min-width: none;
+    width: 18rem;
+}
+
+#squad-div, #all-pokemon-div {
+    margin: 50px;
+}
+
+.card:hover {
+    background-color:rgb(208, 207, 207);
+    opacity: 0.3;
+    transition: 0.3s;
+    }
+
