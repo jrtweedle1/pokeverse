@@ -28,7 +28,7 @@ exports[`the component renders correctly 1`] = `
     className="container text-center"
   >
     <div
-      class="row"
+      className="row"
     />
   </div>
 </div>

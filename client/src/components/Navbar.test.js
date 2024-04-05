@@ -2,7 +2,7 @@ import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import renderer from "react-test-renderer";
-import Navbar from "./Navbar";
+import Navbar from "./Navbar.js";
 
 let container = null;
 

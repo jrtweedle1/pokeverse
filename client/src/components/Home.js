@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import Card from "./Card";
+import Card from "./Card.js";
 
 function Home() {
 	const [allPokemon, setAllPokemon] = useState([]);
@@ -9,12 +9,6 @@ function Home() {
 	useEffect(() => {
 		fetchAllPokemon();
 	}, []);
-
-    // If the list of all Pokemon that are present changes, update the DOM to reflect that
-	useEffect(() => {}, [allPokemon]);
-
-    // If the squad changes, update the DOM to reflect that
-	useEffect(() => {}, [squad]);
 
     // Initial function to populate all 151 original Pokemon
 	async function fetchAllPokemon() {
@@ -77,7 +71,7 @@ function Home() {
 				</div>
 				<h2 className="text-center">Available Pokemon</h2>
 				<div className="container text-center">
-					<div class="row">
+					<div className="row">
 						{allPokemon
 							? allPokemon.map((singlePokemon) => {
 									return (
