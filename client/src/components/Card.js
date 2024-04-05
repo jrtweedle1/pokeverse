@@ -3,11 +3,12 @@ import { PokemonContext } from "./Home";
 
 function Card({ pokemon }) {
 	const { squad, addPokemonToSquad, removePokemonFromSquad } =
-		useContext(PokemonContext);
-	const [description, setDescription] = useState("");
-	const [detailedPokemon, setDetailedPokemon] = useState(null);
-	const [speciesUrl, setSpeciesUrl] = useState("");
+		useContext(PokemonContext); // Functions to add/remove Pokemon from "squad"
+	const [description, setDescription] = useState(""); // Setting state for description renders, which required another API call
+	const [detailedPokemon, setDetailedPokemon] = useState(null); // Setting state for detailed Pokemon info
+	const [speciesUrl, setSpeciesUrl] = useState(""); // Setting state for "species URL" which provides description info
 
+    // If info for a single Pokemon or the species URL changes, update the DOM to reflect that
 	useEffect(() => {
 		if (!pokemon.sprites && pokemon.url) {
 			fetch(pokemon)
@@ -24,16 +25,19 @@ function Card({ pokemon }) {
 		}
 	}, [pokemon, speciesUrl]);
 
+    // When species URL changes (based on the way the API is called), fetch the description
 	useEffect(() => {
 		if (speciesUrl) {
 			fetchDescription(speciesUrl);
 		}
 	}, [speciesUrl]);
 
+    // If we don't have detailed Pokemon info, just show the user loading info
 	if (!detailedPokemon) {
 		return <div>Loading...</div>;
 	}
 
+    // API call to return the description, since the description is not present in the detailedPokemon object
 	function fetchDescription(url) {
 		fetch(url)
 			.then((response) => {
@@ -44,6 +48,7 @@ function Card({ pokemon }) {
 			});
 	}
 
+    // Renders Card(s) in the DOM
 	return (
 		<div className="col">
 			<div className="card" style={{ width: 18 + "rem" }}>
@@ -90,7 +95,5 @@ function Card({ pokemon }) {
 		</div>
 	);
 }
-
-// if (squad.some(pkmn => pkmn.name === detailedPokemon.name))
 
 export default Card;
