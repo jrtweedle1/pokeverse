@@ -5,14 +5,18 @@ function Home() {
 	const [allPokemon, setAllPokemon] = useState([]);
 	const [squad, setSquad] = useState([]);
 
+    // On page load, no more and no less, fetch all 151 original Pokemon
 	useEffect(() => {
 		fetchAllPokemon();
 	}, []);
 
+    // If the list of all Pokemon that are present changes, update the DOM to reflect that
 	useEffect(() => {}, [allPokemon]);
 
+    // If the squad changes, update the DOM to reflect that
 	useEffect(() => {}, [squad]);
 
+    // Initial function to populate all 151 original Pokemon
 	async function fetchAllPokemon() {
 		const initialPokemonJson = await fetch(
 			"https://pokeapi.co/api/v2/pokemon?limit=151"
@@ -29,19 +33,10 @@ function Home() {
 		setAllPokemon(pokemonDetails);
 	}
 
-	// function fetchAllPokemon() {
-	// 	fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
-	// 		.then((response) => {
-	// 			return response.json();
-	// 		})
-	// 		.then((data) => {
-	// 			setAllPokemon(data.results);
-	// 		});
-	// }
-
+    // Adds Pokemon to squad, removes them from list of all Pokemon
 	function addPokemonToSquad(singlePokemon) {
 		const newAllPokemon = allPokemon.filter(function (pkmn) {
-			return pkmn.name != singlePokemon.name;
+			return pkmn.name !== singlePokemon.name;
 		});
 		setAllPokemon(newAllPokemon);
 		setSquad((prevSquad) => {
@@ -49,18 +44,19 @@ function Home() {
 		});
 	}
 
+    // Removes Pokemon from squad, adds them to list of all Pokemon
 	function removePokemonFromSquad(singlePokemon) {
 		setSquad((squad) =>
 			squad.filter(
 				(squadPokemon) => squadPokemon.name !== singlePokemon.name
 			)
 		);
-		console.log("singlePokemon", singlePokemon);
-		console.log("allPokemon", allPokemon);
 		setAllPokemon((currentAllPokemon) => [...allPokemon, singlePokemon]);
 	}
 
+    // Renders "homepage" in the DOM
 	return (
+        // Enables us to pass down squad info/functions to lower-level components
 		<PokemonContext.Provider
 			value={{ squad, addPokemonToSquad, removePokemonFromSquad }}
 		>

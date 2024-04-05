@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the component renders correctly 1`] = `
+Array [
+  <nav
+    className="navbar navbar-expand-lg bg-body-tertiary"
+  >
+    <div
+      className="container-fluid"
+    >
+      <img
+        alt="Pokeverse logo in "
+        src="pokeverse.png"
+      />
+      <button
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        className="navbar-toggler"
+        data-bs-target="#navbarNav"
+        data-bs-toggle="collapse"
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <div
+        className="collapse navbar-collapse"
+        id="navbarNav"
+      >
+        <ul
+          className="navbar-nav"
+        >
+          <li
+            className="nav-item"
+          >
+            <a
+              aria-current="page"
+              className="nav-link active"
+              href="/"
+            >
+              Home
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>,
+  <div>
+    <h1
+      className="text-center"
+    >
+      Home
+    </h1>
+    <h2
+      className="text-center"
+    >
+      My Squad
+    </h2>
+    <div
+      className="container text-center"
+    >
+      <div
+        className="row"
+      />
+    </div>
+    <h2
+      className="text-center"
+    >
+      Available Pokemon
+    </h2>
+    <div
+      className="container text-center"
+    >
+      <div
+        class="row"
+      />
+    </div>
+  </div>,
+]
+`;
