@@ -29,6 +29,7 @@ function Home() {
 
 	// Adds Pokemon to squad, removes them from list of all Pokemon
 	function addPokemonToSquad(singlePokemon) {
+        if (squad.length < 6) {
 		const newAllPokemon = allPokemon.filter(function (pkmn) {
 			return pkmn.name !== singlePokemon.name;
 		});
@@ -36,6 +37,7 @@ function Home() {
 		setSquad((prevSquad) => {
 			return [...prevSquad, singlePokemon];
 		});
+    }
 	}
 
 	// Removes Pokemon from squad, adds them to list of all Pokemon
