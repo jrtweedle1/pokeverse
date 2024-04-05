@@ -5,12 +5,12 @@ function Home() {
 	const [allPokemon, setAllPokemon] = useState([]);
 	const [squad, setSquad] = useState([]);
 
-    // On page load, no more and no less, fetch all 151 original Pokemon
+	// On page load, no more and no less, fetch all 151 original Pokemon
 	useEffect(() => {
 		fetchAllPokemon();
 	}, []);
 
-    // Initial function to populate all 151 original Pokemon
+	// Initial function to populate all 151 original Pokemon
 	async function fetchAllPokemon() {
 		const initialPokemonJson = await fetch(
 			"https://pokeapi.co/api/v2/pokemon?limit=151"
@@ -27,7 +27,7 @@ function Home() {
 		setAllPokemon(pokemonDetails);
 	}
 
-    // Adds Pokemon to squad, removes them from list of all Pokemon
+	// Adds Pokemon to squad, removes them from list of all Pokemon
 	function addPokemonToSquad(singlePokemon) {
 		const newAllPokemon = allPokemon.filter(function (pkmn) {
 			return pkmn.name !== singlePokemon.name;
@@ -38,7 +38,7 @@ function Home() {
 		});
 	}
 
-    // Removes Pokemon from squad, adds them to list of all Pokemon
+	// Removes Pokemon from squad, adds them to list of all Pokemon
 	function removePokemonFromSquad(singlePokemon) {
 		setSquad((squad) =>
 			squad.filter(
@@ -48,40 +48,45 @@ function Home() {
 		setAllPokemon((currentAllPokemon) => [...allPokemon, singlePokemon]);
 	}
 
-    // Renders "homepage" in the DOM
+	// Renders "homepage" in the DOM
 	return (
-        // Enables us to pass down squad info/functions to lower-level components
+		// Enables us to pass down squad info/functions to lower-level components
 		<PokemonContext.Provider
 			value={{ squad, addPokemonToSquad, removePokemonFromSquad }}
 		>
 			<div>
-				<h1 className="text-center">Home</h1>
-				<h2 className="text-center">My Squad</h2>
-				<div className="container text-center">
-					<div className="row">
-						{squad.map((singlePokemon) => {
-							return (
-								<Card
-									key={singlePokemon.name}
-									pokemon={singlePokemon}
-								></Card>
-							);
-						})}
+				<div id="squad-div">
+					<h1 className="text-center">CURRENT SQUAD</h1>
+					<div className="container text-center d-flex justify-content-center">
+						<div className="row">
+							{squad.map((singlePokemon) => {
+								return (
+									<Card
+										key={singlePokemon.name}
+										pokemon={singlePokemon}
+									></Card>
+								);
+							})}
+						</div>
 					</div>
 				</div>
-				<h2 className="text-center">Available Pokemon</h2>
-				<div className="container text-center">
-					<div className="row">
-						{allPokemon
-							? allPokemon.map((singlePokemon) => {
-									return (
-										<Card
-											key={singlePokemon.name}
-											pokemon={singlePokemon}
-										></Card>
-									);
-							  })
-							: "Loading..."}
+				<div id="all-pokemon-div">
+					<h1 className="text-center">AVAILABLE POKEMON</h1>
+					<div className="container text-center">
+						<div
+							className="row d-flex justify-content-center"
+						>
+							{allPokemon
+								? allPokemon.map((singlePokemon) => {
+										return (
+											<Card
+												key={singlePokemon.name}
+												pokemon={singlePokemon}
+											></Card>
+										);
+								  })
+								: "Loading..."}
+						</div>
 					</div>
 				</div>
 			</div>

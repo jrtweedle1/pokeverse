@@ -50,7 +50,7 @@ function Card({ pokemon }) {
 
     // Renders Card(s) in the DOM
 	return (
-		<div className="col">
+		<div className="col d-flex justify-content-center">
 			<div className="card" style={{ width: 18 + "rem" }}>
 				{detailedPokemon && detailedPokemon.sprites ? (
 					<img
