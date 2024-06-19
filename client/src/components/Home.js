@@ -29,6 +29,7 @@ function Home() {
 
 	// Adds Pokemon to squad, removes them from list of all Pokemon
 	function addPokemonToSquad(singlePokemon) {
+        if (squad.length < 6) {
 		const newAllPokemon = allPokemon.filter(function (pkmn) {
 			return pkmn.name !== singlePokemon.name;
 		});
@@ -36,6 +37,7 @@ function Home() {
 		setSquad((prevSquad) => {
 			return [...prevSquad, singlePokemon];
 		});
+    }
 	}
 
 	// Removes Pokemon from squad, adds them to list of all Pokemon
@@ -58,7 +60,7 @@ function Home() {
 				<div id="squad-div">
 					<h1 className="text-center">CURRENT SQUAD</h1>
 					<div className="container text-center d-flex justify-content-center">
-						<div className="row">
+						<div className="row d-flex justify-content-center">
 							{squad.map((singlePokemon) => {
 								return (
 									<Card
@@ -72,7 +74,7 @@ function Home() {
 				</div>
 				<div id="all-pokemon-div">
 					<h1 className="text-center">AVAILABLE POKEMON</h1>
-					<div className="container text-center">
+					<div className="container text-center d-flex justify-content-center">
 						<div
 							className="row d-flex justify-content-center"
 						>
