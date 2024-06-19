@@ -60,7 +60,7 @@ function Home() {
 				<div id="squad-div">
 					<h1 className="text-center">CURRENT SQUAD</h1>
 					<div className="container text-center d-flex justify-content-center">
-						<div className="row">
+						<div className="row d-flex justify-content-center">
 							{squad.map((singlePokemon) => {
 								return (
 									<Card
@@ -74,7 +74,7 @@ function Home() {
 				</div>
 				<div id="all-pokemon-div">
 					<h1 className="text-center">AVAILABLE POKEMON</h1>
-					<div className="container text-center">
+					<div className="container text-center d-flex justify-content-center">
 						<div
 							className="row d-flex justify-content-center"
 						>
